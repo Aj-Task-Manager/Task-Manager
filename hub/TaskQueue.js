@@ -41,11 +41,30 @@ class TaskQueue {
     }
 
     getQueue(clientName) {
-        if (this.hasQueue(clientName)) {
-            return this.queue.clientName;
-        } else {
-            return { tasks: [] };
+        if (!this.hasQueue(clientName)) {
+            this.addQueue(clientName);
         }
+        return this.queue.clientName;
+    }
+
+    addTask(clientName, task) {
+        const newTask = { ...task,
+                           status: 'new',
+        }
+        this.queue[clientName].tasks.push(newTask);
+    }
+
+    updateTask(clientName, updatedTask) {
+        this.queue[clientName].tasks.map((task) => {
+            if (task.title === updatedTask.title) {
+              return updatedTask;
+            }
+            return task;
+        })
+    }
+
+    deleteTask(clientName, taskToRemove) {
+        this.queue[clientName].tasks.filter((task) => task.title !== taskToRemove.title);
     }
 
     updateQueue(clientName, tasks) {
