@@ -32,8 +32,8 @@ socket.on('connect', () => {
 });
 
   // Listen for a custom event 
-  socket.on('customBroadcastEvent', (message) => {
-    console.log(`Received custom broadcast: ${message}`);
+  socket.on('broadcastMsg', (message) => {
+    console.log(`${message}`);
   });
 
 
