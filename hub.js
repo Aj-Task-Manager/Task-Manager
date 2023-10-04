@@ -25,28 +25,28 @@ taskServer.on('connection', function(socket){
     socket.join(assignee);
 
     // send client their task list if one exists, or an obj like {tasks: []} if not
-    const initialTaskList = hubQueue.getQueue(assignee);
+    const initialTaskList = hubQueue.getQueue(data.assignee);
 
     console.log(`Inital task list for ${assignee}: ${initialTaskList}`);
     
     taskServer.to(assignee).emit('getTasks', initialTaskList);
 
     // listen for create tasks
-    socket.to(assignee).on('create', (data) => {
-        hubQueue.addTask(assignee, data);
-        taskServer.emit('broadcastMsg', { message: `New Task '${title}' created by ${assignee}` });
+    socket.on('create', (data) => {
+        hubQueue.addTask(data);
+        taskServer.emit('broadcastMsg', { message: `New Task '${data.title}' created by ${data.assignee}` });
     })
 
     // listen for update tasks
-    socket.to(assignee).on('update', (data) => {
-        hubQueue.updateTask(assignee, data);
-        taskServer.emit('broadcastMsg', { message: `Task '${title}' completed by ${assignee}` });
+    socket.on('update', (data) => {
+        hubQueue.updateTask(data);
+        taskServer.emit('broadcastMsg', { message: `Task '${data.title}' completed by ${data.assignee}` });
     })
 
     // listen for delete tasks
-    socket.to(assignee).on('delete', (data) => {
-        hubQueue.deleteTask(assignee, data);
-        taskServer.emit('broadcastMsg', { message: `Task '${title}' deleted by ${assignee}` });
+    socket.on('delete', (data) => {
+        hubQueue.deleteTask(data);
+        taskServer.emit('broadcastMsg', { message: `Task '${data.title}' deleted by ${data.assignee}` });
     })
 
    })

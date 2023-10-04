@@ -19,21 +19,18 @@ socket.on('connect', () => {
   });
 
   // Example: Create a new task
-  const newTask = { title: 'New Task' };
-  socket.emit('create', { assignee: clientName, task: newTask });
+  socket.emit('create', { assignee: clientName, title: 'New Task' });
 
   // Example: Update existing tasks
-  const updatedTask = { title: 'Task 1', status: 'completed' };
-  socket.emit('update', { assignee: clientName, task: updatedTask });
+  socket.emit('update', { assignee: clientName, title: 'New Task' });
 
   // Example: Delete tasks
-  const taskToDelete = { title: 'Task 3' };
-  socket.emit('delete', { assignee: clientName, task: taskToDelete });
+  socket.emit('delete', { assignee: clientName, title: 'New Task' });
 });
 
   // Listen for a custom event 
-  socket.on('broadcastMsg', (message) => {
-    console.log(`${message}`);
+  socket.on('broadcastMsg', (broadcast) => {
+    console.log(`${broadcast.message}`);
   });
 
 
