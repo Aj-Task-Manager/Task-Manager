@@ -4,8 +4,9 @@
   "description": "",
   "main": "hub.js",
   "scripts": {
-    "start": "node hub.js",
-    "start-client": "node client.js"
+    "test": "jest --coverage --verbose",
+    "dev": "nodemon hub.js",
+    "start": "node hub.js"
   },
   "keywords": [],
   "author": "",
