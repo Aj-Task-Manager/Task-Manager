@@ -23,13 +23,19 @@ socket.on('connect', () => {
   socket.emit('create', { assignee: clientName, task: newTask });
 
   // Example: Update existing tasks
-  const updatedTask = { title: 'Task 1', completed: true };
+  const updatedTask = { title: 'Task 1', status: 'completed' };
   socket.emit('update', { assignee: clientName, task: updatedTask });
 
   // Example: Delete tasks
   const taskToDelete = { title: 'Task 3' };
   socket.emit('delete', { assignee: clientName, task: taskToDelete });
 });
+
+  // Listen for a custom event 
+  socket.on('customBroadcastEvent', (message) => {
+    console.log(`Received custom broadcast: ${message}`);
+  });
+
 
 socket.on('disconnect', () => {
   console.log('Disconnected from the hub');
